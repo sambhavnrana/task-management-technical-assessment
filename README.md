@@ -198,17 +198,21 @@ After setup, create sample data:
 
 ## Submission Guidelines
 
-1. **Code Repository**
+1. **AI Usage**
+   - We discourage using AI Code tools extensively, however using it to learn or for help with an understanding is allowed.
+   - We require that you are not dependent on AI Coding tools, and are able to work without AI Coding tools.
+
+2. **Code Repository**
    - Push code to GitHub/GitLab
    - Include all source files
    - Exclude node_modules and .env files
 
-2. **Documentation**
+3. **Documentation**
    - Complete README with setup instructions
    - Document any design decisions
    - List any known issues or limitations
 
-3. **Environment Setup**
+4. **Environment Setup**
    - Provide .env.example files
    - Include database migration scripts
    - Docker configuration (bonus)
