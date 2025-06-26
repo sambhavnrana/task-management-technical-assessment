@@ -1,33 +1,53 @@
-# Full-Stack Technical Assessment
+# Task Management System
 
-## Overview
-Build a simple **Task Management System** with user authentication and CRUD operations. This test evaluates your skills in modern web development using Node.js, Express, TypeScript, PostgreSQL, and React.
+A full-stack task management system with user authentication and CRUD operations, built with Node.js, Express, TypeScript, PostgreSQL, React, and Tailwind CSS.
 
-**Time Allocation:** 4-6 hours
+---
 
-## Technical Requirements
+## Features
 
-### Backend Stack
-- **Node.js** (v20+)
-- **Express.js** (v4+)
-- **TypeScript** (v5+)
-- **PostgreSQL** (v15+)
-- **JWT** for authentication
-- **bcrypt** for password hashing
+- User registration and login (JWT authentication)
+- Secure password hashing (bcrypt)
+- CRUD operations for tasks
+- Filter and sort tasks by status, priority, or date
+- Responsive, modern UI with Tailwind CSS
 
-### Frontend Stack
-- **React** (v18+)
-- **TypeScript**
-- **Modern CSS** (CSS Modules, Styled Components, or Tailwind)
-- **Fetch API** or Axios for HTTP requests
+---
 
-## Backend Requirements
+## Setup Instructions
 
-### Database Schema
-Create the following PostgreSQL tables:
+### 1. **Clone the repository**
+
+```sh
+git clone https://github.com/sambhavnrana/task-management-technical-assessment
+cd task-management
+```
+
+### 2. **Backend Setup**
+
+```sh
+cd backend
+npm install
+```
+
+#### **Environment Variables**
+
+Create a `.env` file in the `backend` directory:
+
+```
+DATABASE_URL=postgresql://<username>:<password>@localhost:5432/taskdb
+JWT_SECRET=your_jwt_secret
+PORT=4000
+```
+
+#### **Database Setup**
+
+Start PostgreSQL and create the database and tables:
 
 ```sql
--- Users table
+CREATE DATABASE taskdb;
+\c taskdb
+
 CREATE TABLE users (
   id SERIAL PRIMARY KEY,
   email VARCHAR(255) UNIQUE NOT NULL,
@@ -36,7 +56,6 @@ CREATE TABLE users (
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Tasks table
 CREATE TABLE tasks (
   id SERIAL PRIMARY KEY,
   title VARCHAR(255) NOT NULL,
@@ -49,175 +68,101 @@ CREATE TABLE tasks (
 );
 ```
 
-### API Endpoints
+#### **Run the Backend**
 
-#### Authentication
-- `POST /api/auth/register` - User registration
-- `POST /api/auth/login` - User login
-- `GET /api/auth/profile` - Get current user profile (protected)
-
-#### Tasks
-- `GET /api/tasks` - Get user's tasks (protected)
-- `POST /api/tasks` - Create new task (protected)
-- `PUT /api/tasks/:id` - Update task (protected)
-- `DELETE /api/tasks/:id` - Delete task (protected)
-
-### TypeScript Interfaces
-
-Create proper TypeScript interfaces for:
-- User model
-- Task model
-- API request/response types
-- JWT payload
-
-### Middleware Requirements
-- Authentication middleware using JWT
-- Request validation middleware
-- Error handling middleware
-- CORS configuration
-
-## Frontend Requirements
-
-### Pages/Components
-1. **Login/Register Page**
-   - Toggle between login and register forms
-   - Form validation
-   - Error handling
-
-2. **Dashboard**
-   - Display user's tasks in a list/grid
-   - Filter tasks by status (pending, in-progress, completed)
-   - Sort tasks by priority or date
-
-3. **Task Form**
-   - Create/Edit task modal or separate page
-   - Fields: title, description, status, priority
-   - Form validation
-
-### State Management
-- Use React hooks (useState, useEffect, useContext)
-- Implement authentication state management
-- Handle loading and error states
-
-### Styling Requirements
-- Responsive design (mobile-friendly)
-- Clean, modern UI
-- Loading indicators
-- Success/error notifications
-
-## Deliverables
-
-### Code Structure
-```
-project/
-├── backend/
-│   ├── src/
-│   │   ├── controllers/
-│   │   ├── middleware/
-│   │   ├── models/
-│   │   ├── routes/
-│   │   ├── types/
-│   │   ├── utils/
-│   │   └── server.ts
-│   ├── package.json
-│   └── tsconfig.json
-├── frontend/
-│   ├── src/
-│   │   ├── components/
-│   │   ├── pages/
-│   │   ├── hooks/
-│   │   ├── types/
-│   │   └── App.tsx
-│   ├── package.json
-│   └── tsconfig.json
-└── README.md
+```sh
+npm run dev
 ```
 
-### Documentation
-Provide a comprehensive README.md with:
-- Setup instructions
-- Environment variables needed
-- Database setup commands
-- How to run the application
-- API documentation
-- Any assumptions made
+The backend will run on [http://localhost:4000](http://localhost:4000)
 
-## Evaluation Criteria
+---
 
-### Code Quality (30%)
-- Clean, readable TypeScript code
-- Proper error handling
-- Code organization and structure
-- Consistent naming conventions
+### 3. **Frontend Setup**
 
-### Functionality (25%)
-- All required features working
-- Proper authentication flow
-- CRUD operations functioning
-- Data validation
+```sh
+cd ../frontend
+npm install
+```
 
-### Database Design (15%)
-- Proper schema design
-- Database queries optimization
-- Data relationships
+#### **Vite Proxy Setup**
 
-### Security (15%)
-- JWT implementation
-- Password hashing
-- Input validation
-- SQL injection prevention
+Edit `vite.config.ts` to add:
 
-### Frontend Implementation (15%)
-- Component structure
-- State management
-- User experience
-- Responsive design
+```ts
+server: {
+  proxy: {
+    '/api': 'http://localhost:4000',
+  },
+},
+```
 
-## Bonus Points
+#### **Run the Frontend**
 
-### Advanced Features (+10 points each)
-- [ ] Implement task due dates with reminders
-- [ ] Add task categories/tags
-- [ ] Implement real-time updates using WebSockets
-- [ ] Add unit tests (Jest/Vitest)
-- [ ] Deploy to cloud platform (Heroku, Vercel, etc.)
-- [ ] Implement pagination for tasks
-- [ ] Add dark/light theme toggle
+```sh
+npm run dev
+```
 
-### Code Quality Enhancements (+5 points each)
-- [ ] ESLint and Prettier configuration
-- [ ] Proper TypeScript strict mode
-- [ ] Environment-based configuration
-- [ ] API rate limiting
-- [ ] Request logging middleware
+The frontend will run on [http://localhost:5173](http://localhost:5173)
 
-## Sample Data
-After setup, create sample data:
-- 2-3 test users
-- 10-15 tasks with different statuses and priorities
+---
 
-## Submission Guidelines
+## API Documentation
 
-1. **AI Usage**
-   - We discourage using AI Code tools extensively, however using it to learn or for help with an understanding is allowed.
-   - We require that you are not dependent on AI Coding tools, and are able to work without AI Coding tools.
+### **Authentication**
 
-2. **Code Repository**
-   - Push code to GitHub/GitLab
-   - Include all source files
-   - Exclude node_modules and .env files
+- `POST /api/auth/register` — Register a new user
+- `POST /api/auth/login` — Login and receive JWT
+- `GET /api/auth/profile` — Get current user profile (protected)
 
-3. **Documentation**
-   - Complete README with setup instructions
-   - Document any design decisions
-   - List any known issues or limitations
+#### **Request/Response Examples**
 
-4. **Environment Setup**
-   - Provide .env.example files
-   - Include database migration scripts
-   - Docker configuration (bonus)
+**Register:**
 
-## Questions?
-If you have questions about requirements or need clarification on any aspect of the test, please ask. We value communication and problem-solving approach as much as the final implementation.
+```json
+POST /api/auth/register
+{
+  "email": "test@example.com",
+  "password": "password123",
+  "name": "Test User"
+}
+```
 
-Good luck!
+**Login:**
+
+```json
+POST /api/auth/login
+{
+  "email": "test@example.com",
+  "password": "password123"
+}
+```
+
+**Create Task:**
+
+```json
+POST /api/tasks
+{
+  "title": "My Task",
+  "description": "Details...",
+  "status": "pending",
+  "priority": "medium"
+}
+```
+
+**Authorization:**
+All protected routes require a JWT in the `Authorization` header:
+
+```
+Authorization: Bearer <token>
+```
+
+---
+
+## Assumptions
+
+- The backend and frontend run on separate ports during development.
+- The JWT secret is kept secure and consistent between sign/verify.
+- PostgreSQL is running locally and accessible at the default port at your machine.
+- The user creates the database and tables as shown above.
+- The frontend uses Vite's proxy to avoid CORS issues in development.
